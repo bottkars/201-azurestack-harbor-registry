@@ -103,7 +103,8 @@
             "[concat(variables('baseUri'),  '/scripts/deploy_base.sh')]",
             "[concat(variables('baseUri'),  '/scripts/deploy_docker.sh')]",
             "[concat(variables('baseUri'),  '/scripts/deploy_harbor.sh')]",
-            "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/shared_scripts/ubuntu/vm-disk-utils-0.1.sh"        ]
+            "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/shared_scripts/ubuntu/vm-disk-utils-0.1.sh"
+        ]
     },
     "resources": [
         {
@@ -111,6 +112,10 @@
             "sku": {
                 "name": "[variables('DiagnosticsStorageAccountType')]"
             },
+            "tags": {
+                "provisioner": "harbor_template_by_azurestackguy"
+            },
+
             "kind": "Storage",
             "name": "[variables('DiagnosticsStorageAccountName')]",
             "apiVersion": "2017-06-01",
@@ -123,6 +128,10 @@
             "name": "[variables('publicIPAddressName')]",
             "apiVersion": "2017-06-01",
             "location": "[parameters('location')]",
+            "tags": {
+                "provisioner": "harbor_template_by_azurestackguy"
+            },
+
             "properties": {
                 "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
                 "dnsSettings": {
@@ -135,6 +144,10 @@
             "name": "[variables('virtualNetworkName')]",
             "apiVersion": "2017-06-01",
             "location": "[parameters('location')]",
+            "tags": {
+                "provisioner": "harbor_template_by_azurestackguy"
+            },
+
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": [
@@ -156,6 +169,10 @@
             "name": "[variables('nicName')]",
             "apiVersion": "2017-06-01",
             "location": "[parameters('location')]",
+            "tags": {
+                "provisioner": "harbor_template_by_azurestackguy"
+            },
+
             "properties": {
                 "networkSecurityGroup": {
                     "id": "[resourceId('Microsoft.Network/networkSecurityGroups',  variables('harbor_security_group_name'))]"
@@ -190,7 +207,8 @@
                 "type": "none"
             },
             "tags": {
-                "Application": "Harbor Registry"
+                "Application": "Harbor Registry",
+                "provisioner": "harbor_template_by_azurestackguy"
             },
             "properties": {
                 "hardwareProfile": {
@@ -262,7 +280,7 @@
             "apiVersion": "2017-10-01",
             "location": "[parameters('location')]",
             "tags": {
-                "provisioner": "pcf_opsman_template"
+                "provisioner": "harbor_template_by_azurestackguy"
             },
             "type": "Microsoft.Network/networkSecurityGroups",
             "properties": {
@@ -484,7 +502,8 @@
                             "LOCATION": "[parameters('location')]",
                             "SSH_PUBLIC_KEY": "[parameters('sshkeyData')]",
                             "HARBOR_USERNAME": "[parameters('harborUsername')]",
-                            "USE_SELF_CERTS": "[parameters('useSelfCerts')]"
+                            "USE_SELF_CERTS": "[parameters('useSelfCerts')]",
+                            "FQDN": "[reference(variables('publicIPAddressName')).dnsSettings.fqdn]"
                         }
                     }
                 }
