@@ -116,7 +116,7 @@ END_BASE_DEPLOY_TIME=$(date)
 echo ${END_BASE_DEPLOY_TIME} end base deployment
 
 
-echo "Base install finished, now initializing opsman
-for install status information, run 'tail -f ${LOG_DIR}/om_init.sh.*.log'"
+echo "Base install finished, now initializing harbor
+for install status information, run 'tail -f ${LOG_DIR}/deploy_harbor.sh.*.log'"
 
 su ${ADMIN_USERNAME}  -c "nohup ${SCRIPT_DIR}/deploy_harbor.sh -h ${HOME_DIR} >/dev/null 2>&1 &"
