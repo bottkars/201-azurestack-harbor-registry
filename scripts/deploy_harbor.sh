@@ -36,6 +36,6 @@ URI="https://github.com/goharbor/harbor/releases/download/${TAG}/harbor-online-i
 wget $URI
 tar xzfv harbor-online-installer-${TAG}.tgz
 sed "s/^hostname: .*/hostname: ${FQDN}/g" -i ./harbor/harbor.yml
-sed "s/^data_volume: \/data/data_volme: \/datadisks\/disk1/g" -i ./harbor/harbor.yml
+sed "s/^data_volume: \/data/data_volume: \/datadisks\/disk1/g" -i ./harbor/harbor.yml
 cd ./harbor
 sudo ./install.sh
