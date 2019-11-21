@@ -35,9 +35,13 @@ function get_setting() {
 custom_data_file="/var/lib/cloud/instance/user-data.txt"
 settings=$(cat ${custom_data_file})
 
-HARBOR_USERNAME=$(get_setting HARBOR_USERNAME)
 
-NET_16_BIT_MASK=$(get_setting NET_16_BIT_MASK)
+
+HARBOR_USERNAME=$(get_setting HARBOR_USERNAME)
+ADMIN_USERNAME=$(get_setting ADMIN_USERNAME)
+FQDN=$(get_setting FQDN)
+SSH_PUBLIC_KEY=$(get_setting SSH_PUBLIC_KEY)
+
 DOWNLOAD_DIR="/datadisks/disk1"
 USE_SELF_CERTS=$(get_setting USE_SELF_CERTS)
 HOME_DIR="/home/${ADMIN_USERNAME}"
@@ -80,9 +84,12 @@ chmod -R 755 ${DOWNLOAD_DIR}
 
 $(cat <<-EOF > ${HOME_DIR}/.env.sh
 #!/usr/bin/env bash
+FQDN="${FQDN}"
 LOCATION="${LOCATION}"
 HOME_DIR="${HOME_DIR}"
-HARBOR_USERNAME="${PCF_OPSMAN_USERNAME}"
+HARBOR_USERNAME="${HARBOR_USERNAME}"
+ADMIN_USERNAME="${ADMIN_USERNAME}"
+FQDN="${FQDN}"
 DOWNLOAD_DIR="${DOWNLOAD_DIR}"
 USE_SELF_CERTS=${USE_SELF_CERTS}
 LOG_DIR=${LOG_DIR}
