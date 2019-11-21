@@ -12,5 +12,5 @@ sudo curl -L "https://github.com/docker/compose/releases/download/${TAG}/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 
 
-sed "s/^hostname: .*/hostname: ${FQDN}}/g" -i .harbor/harbor.yml
-sed "s/^data_volume: \/data/data_volumme: \/datadisks\/disk1 ${FQDN}}/g" -i .harbor/harbor.yml
+sed "s/^hostname: .*/hostname: ${FQDN}}/g" -i ./harbor/harbor.yml
+sed "s/^data_volume: \/data/data_volumme: \/datadisks\/disk1 ${FQDN}}/g" -i ./harbor/harbor.yml
