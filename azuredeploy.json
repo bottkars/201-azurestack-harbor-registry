@@ -91,6 +91,12 @@
             "metadata": {
                 "description": "Storage Account Container AzureStack, mandatory for registry on Sorage Account"
             }
+        },
+        "azurestackdomain": {
+            "type": "String",
+            "metadata": {
+                "description": "Storage Account Container AzureStack, mandatory for registry on Sorage Account"
+            }
         },    
         "rootCA": {
             "type": "String",
@@ -532,6 +538,7 @@
                             "AZS_CA": "[parameters('rootCA')]",
                             "AZS_STORAGE_ACCOUNT_KEY": "[parameters('accountkey')]",
                             "AZS_STORAGE_ACCOUNT_NAME": "[parameters('accountname')]",
+                            "AZS_BASE_DOMAIN": "[parameters('azurestackdomain')]",
                             "FQDN": "[reference(variables('publicIPAddressName')).dnsSettings.fqdn]"
                         }
                     }

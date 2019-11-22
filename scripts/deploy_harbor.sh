@@ -36,5 +36,21 @@ wget $URI
 tar xzfv harbor-online-installer-${TAG}.tgz
 sed "s/^hostname: .*/hostname: ${FQDN}/g" -i ./harbor/harbor.yml
 sed "s/^data_volume: \/data/data_volume: \/datadisks\/disk1/g" -i ./harbor/harbor.yml
+
+
+#cat <<EOF >> ./harbor/harbor.yml
+#storage_service:
+#  ca_bundle: "${AZS_CA}"
+#  azure:
+#    accountname: ${AZS_STORAGE_ACCOUNT_NAME}
+#    accountkey: ${AZS_STORAGE_ACCOUNT_KEY}
+#    container: ${AZS_STORAGE_CONTAINER}
+#    realm: ${AZS_BASE_DOMAIN}
+# EOF
+
 cd ./harbor
 sudo ./install.sh
+
+
+
+
