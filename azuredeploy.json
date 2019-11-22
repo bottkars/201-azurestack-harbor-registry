@@ -530,7 +530,7 @@
                             "USE_SELF_CERTS": "[parameters('useSelfCerts')]",
                             "AZS_STORAGE_CONTAINER": "[parameters('container')]",
                             "AZS_CA": "[parameters('rootCA')]",
-                            "AZS_STORAGE_ACCOUNTKEY": "[parameters('accountkey')]",
+                            "AZS_STORAGE_ACCOUNT_KEY": "[parameters('accountkey')]",
                             "AZS_STORAGE_ACCOUNT_NAME": "[parameters('accountname')]",
                             "FQDN": "[reference(variables('publicIPAddressName')).dnsSettings.fqdn]"
                         }

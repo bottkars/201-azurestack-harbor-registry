@@ -38,7 +38,7 @@ az group deployment validate --resource-group harbor \
     sshKeyData=${SSHKEY} \
     rootCA=${CERT} \
     container=${AZS_STORAGE_CONTAINER} \
-    accountkey=${AZS_STORAGE_ACCOUNTKEY} \
+    accountkey=${AZS_STORAGE_ACCOUNT_KEY} \
     accountname=${AZS_STORAGE_ACCOUNT_NAME}
 ```
 
@@ -50,7 +50,7 @@ az group deployment create --resource-group harbor \
     sshKeyData=${SSHKEY} \
     rootCA=${CERT} \
     container=${AZS_STORAGE_CONTAINER} \
-    accountkey=${AZS_STORAGE_ACCOUNTKEY} \
+    accountkey=${AZS_STORAGE_ACCOUNT_KEY} \
     accountname=${AZS_STORAGE_ACCOUNT_NAME}
 ```
 
