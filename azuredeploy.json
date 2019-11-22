@@ -73,6 +73,31 @@
                 "description": "Location for all resources."
             }
         },
+
+        "accountname": {
+            "type": "String",
+            "metadata": {
+                "description": "Storage Account for AzureStack, mandatory for registry on Sorage Account"
+            }
+        },    
+        "accountkey": {
+            "type": "String",
+            "metadata": {
+                "description": "Storage Account Key AzureStack, mandatory for registry on Sorage Account"
+            }
+        },    
+        "container":{
+            "type": "String",
+            "metadata": {
+                "description": "Storage Account Container AzureStack, mandatory for registry on Sorage Account"
+            }
+        },    
+        "rootCA": {
+            "type": "String",
+            "metadata": {
+                "description": "root CA for AzureStack, mandatory for registry on Sorage Account"
+            }
+        },        
         "_artifactsLocation": {
             "defaultValue": "https://raw.githubusercontent.com/bottkars/201-azurestack-harbor-registry/master",
             "type": "String",
@@ -503,6 +528,10 @@
                             "SSH_PUBLIC_KEY": "[parameters('sshkeyData')]",
                             "HARBOR_USERNAME": "[parameters('harborUsername')]",
                             "USE_SELF_CERTS": "[parameters('useSelfCerts')]",
+                            "AZS_STORAGE_CONTAINER": "[parameters('container')]",
+                            "AZS_CA": "[parameters('rootCA')]",
+                            "AZS_STORAGE_ACCOUNTKEY": "[parameters('accountkey')]",
+                            "AZS_STORAGE_ACCOUNT_NAME": "[parameters('accountname')]",
                             "FQDN": "[reference(variables('publicIPAddressName')).dnsSettings.fqdn]"
                         }
                     }
