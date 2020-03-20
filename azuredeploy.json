@@ -76,29 +76,34 @@
 
         "accountname": {
             "type": "String",
+            "defaultValue": "empty",
             "metadata": {
                 "description": "Storage Account for AzureStack, mandatory for registry on Sorage Account"
             }
         },    
         "accountkey": {
             "type": "String",
+            "defaultValue": "empty",
             "metadata": {
                 "description": "Storage Account Key AzureStack, mandatory for registry on Sorage Account"
             }
         },    
         "container":{
+            "defaultValue": "empty",
             "type": "String",
             "metadata": {
                 "description": "Storage Account Container AzureStack, mandatory for registry on Sorage Account"
             }
         },
         "azurestackdomain": {
+            "defaultValue": "empty",
             "type": "String",
             "metadata": {
                 "description": "Storage Account Container AzureStack, mandatory for registry on Sorage Account"
             }
         },    
         "rootCA": {
+            "defaultValue": "empty",
             "type": "String",
             "metadata": {
                 "description": "root CA for AzureStack, mandatory for registry on Sorage Account"
@@ -119,9 +124,9 @@
         "imagePublisher": "Canonical",
         "imageOffer": "UbuntuServer",
         "nicName": "myVMNic",
-        "addressPrefix": "10.11.0.0/16",
+        "addressPrefix": "10.110.0.0/16",
         "subnetName": "Subnet1",
-        "subnetPrefix": "10.11.0.0/24",
+        "subnetPrefix": "10.110.0.0/24",
         "publicIPAddressName": "myPublicIP",
         "publicIPAddressType": "Dynamic",
         "vmName": "harbor",
