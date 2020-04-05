@@ -50,9 +50,8 @@ TAG="v1.10.1"
 wget $URI
 tar xzfv harbor-online-installer-${TAG}.tgz
 sed "s/^hostname: .*/hostname: ${FQDN}/g" -i ./harbor/harbor.yml
-sed "s/^certificate: .*/certificate: ${HOME_DIR//\//\\/}\/${FQDN}.host.crt/g" -i ./harbor/harbor.yml
-sed "s/^private_key: .*/private_key: ${HOME_DIR//\//\\/}\/${FQDN}.key/g" -i ./harbor/harbor.yml
-
+sed "s/^  certificate: .*/  certificate: ${HOME_DIR//\//\\/}\/${FQDN}.host.crt/g" -i ./harbor/harbor.yml
+sed "s/^  private_key: .*/  private_key: ${HOME_DIR//\//\\/}\/${FQDN}.key/g" -i ./harbor/harbor.yml
 sed "s/^data_volume: \/data/data_volume: \/datadisks\/disk1/g" -i ./harbor/harbor.yml
 
 if [ -s "${FQDN}.ca.crt" ] ; then
