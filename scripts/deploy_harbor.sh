@@ -45,8 +45,8 @@ fi
 
 
 TAG=$(curl -s https://api.github.com/repos/goharbor/harbor/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
-URI="https://github.com/goharbor/harbor/releases/download/${TAG}/harbor-online-installer-${TAG}.tgz"
 TAG="v1.10.1"
+URI="https://github.com/goharbor/harbor/releases/download/${TAG}/harbor-online-installer-${TAG}.tgz"
 wget $URI
 tar xzfv harbor-online-installer-${TAG}.tgz
 sed "s/^hostname: .*/hostname: ${FQDN}/g" -i ./harbor/harbor.yml
