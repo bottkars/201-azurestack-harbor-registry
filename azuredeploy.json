@@ -27,11 +27,12 @@
             }
         },
         "externalHostname": {
+            "defaultValue": "",
             "type": "String",
             "metadata": {
                 "description": "only if using external DNS, specify the FQDN here, otherwise defaulting to hostname.azurestackdnslabel"
             }
-        },        
+        },
         "harborUsername": {
             "defaultValue": "admin",
             "minLength": 5,
@@ -52,27 +53,29 @@
             }
         },
 
-"caCert": {
+        "caCert": {
             "type": "String",
+            "defaultValue": "",
             "metadata": {
                 "description": "Your Root CA Cert for HTTPS SSL, required for DOcker Engine in no Mozilla CA"
             }
         },
-"hostCert": {
-
+        "hostCert": {
+            "defaultValue": "",
             "type": "String",
             "metadata": {
                 "description": "Host cert for Harbor Host or wildcard san for Domain. if not present, a selfsigned cert will be generated"
             }
         },
 
-"certKey": {
+        "certKey": {
+            "defaultValue": "",
             "type": "String",
             "metadata": {
                 "description": "for testing, use self signed certs, otherwise Let´s Encrypt"
             }
-        },                
-"ubuntuOSVersion": {
+        },
+        "ubuntuOSVersion": {
             "defaultValue": "18.04-LTS",
             "allowedValues": [
                 "18.04-LTS"
@@ -103,39 +106,39 @@
 
         "accountname": {
             "type": "String",
-            "defaultValue": "empty",
+            "defaultValue": "",
             "metadata": {
                 "description": "Storage Account for AzureStack, mandatory for registry on Sorage Account"
             }
-        },    
+        },
         "accountkey": {
             "type": "String",
-            "defaultValue": "empty",
+            "defaultValue": "",
             "metadata": {
                 "description": "Storage Account Key AzureStack, mandatory for registry on Sorage Account"
             }
-        },    
-        "container":{
-            "defaultValue": "empty",
+        },
+        "container": {
+            "defaultValue": "",
             "type": "String",
             "metadata": {
                 "description": "Storage Account Container AzureStack, mandatory for registry on Sorage Account"
             }
         },
         "azurestackdomain": {
-            "defaultValue": "empty",
+            "defaultValue": "",
             "type": "String",
             "metadata": {
                 "description": "Storage Account Container AzureStack, mandatory for registry on Sorage Account"
             }
-        },    
+        },
         "rootCA": {
-            "defaultValue": "empty",
+            "defaultValue": "",
             "type": "String",
             "metadata": {
                 "description": "root CA for AzureStack, mandatory for registry on Sorage Account"
             }
-        },        
+        },
         "_artifactsLocation": {
             "defaultValue": "https://raw.githubusercontent.com/bottkars/201-azurestack-harbor-registry/master",
             "type": "String",
