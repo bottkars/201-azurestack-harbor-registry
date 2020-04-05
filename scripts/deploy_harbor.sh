@@ -46,18 +46,20 @@ fi
 
 TAG=$(curl -s https://api.github.com/repos/goharbor/harbor/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
 URI="https://github.com/goharbor/harbor/releases/download/${TAG}/harbor-online-installer-${TAG}.tgz"
+TAG="v1.10.1"
 wget $URI
 tar xzfv harbor-online-installer-${TAG}.tgz
 sed "s/^hostname: .*/hostname: ${FQDN}/g" -i ./harbor/harbor.yml
-sed "s/^certificate: .*/certificate: ${HOME_DIR}/${FQDN}.host.crt/g" -i ./harbor/harbor.yml
-sed "s/^private_key: .*/private_key: ${HOME_DIR}/${FQDN}.key/g" -i ./harbor/harbor.yml
+sed "s/^certificate: .*/certificate: ${HOME_DIR//\//\\/}\/${FQDN}.host.crt/g" -i ./harbor/harbor.yml
+sed "s/^private_key: .*/private_key: ${HOME_DIR//\//\\/}\/${FQDN}.key/g" -i ./harbor/harbor.yml
 
 sed "s/^data_volume: \/data/data_volume: \/datadisks\/disk1/g" -i ./harbor/harbor.yml
 
 if [ -s "${FQDN}.ca.crt" ] ; then
     sudo mkdir -p /etc/docker/certs.d/${FQDN}/
-    sudo cp -c ${HOME_DIR}/${FQDN}.ca.crt /etc/docker/certs.d/${FQDN}/ca.crt
-
+    sudo cp  ${HOME_DIR}/${FQDN}.ca.crt /etc/docker/certs.d/${FQDN}/ca.crt
+    sudo systemctl restart docker    
+fi
 #cat <<EOF >> ./harbor/harbor.yml
 #storage_service:
 #  ca_bundle: "${AZS_CA}"
@@ -70,7 +72,3 @@ if [ -s "${FQDN}.ca.crt" ] ; then
 
 cd ./harbor
 sudo ./install.sh
-
-
-
-
