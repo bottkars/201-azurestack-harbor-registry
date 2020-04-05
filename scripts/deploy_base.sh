@@ -40,6 +40,8 @@ settings=$(cat ${custom_data_file})
 HARBOR_USERNAME=$(get_setting HARBOR_USERNAME)
 ADMIN_USERNAME=$(get_setting ADMIN_USERNAME)
 FQDN=$(get_setting FQDN)
+EXTERNAL_HOSTNAME=$(get_setting EXTERNAL_HOSTNAME)
+
 SSH_PUBLIC_KEY=$(get_setting SSH_PUBLIC_KEY)
 AZS_CA=$(get_setting AZS_CA)
 AZS_STORAGE_CONTAINER=$(get_setting AZS_STORAGE_CONTAINER)
@@ -47,6 +49,10 @@ AZS_STORAGE_ACCOUNT_KEY=$(get_setting AZS_STORAGE_ACCOUNT_KEY)
 AZS_STORAGE_ACCOUNT_NAME=$(get_setting AZS_STORAGE_ACCOUNT_NAME)
 AZS_BASE_DOMAIN=$(get_setting AZS_BASE_DOMAIN)
 DOWNLOAD_DIR="/datadisks/disk1"
+CA_CERT=$(get_setting CA_CERT)
+HOST_CERT=$(get_setting HOST_CERT)
+CERT_KEY=$(get_setting CERT_KEY)
+
 USE_SELF_CERTS=$(get_setting USE_SELF_CERTS)
 HOME_DIR="/home/${ADMIN_USERNAME}"
 LOG_DIR="${HOME_DIR}/conductor/logs"
@@ -78,12 +84,10 @@ ${SCRIPT_DIR}/vm-disk-utils-0.1.sh
 chown ${ADMIN_USERNAME}.${ADMIN_USERNAME} ${DOWNLOAD_DIR}
 chmod -R 755 ${DOWNLOAD_DIR}
 
-#if  [ ! -z ${WAVEFRONT_API} ] && \
-#[ ! -z ${WAVEFRONT_TOKEN} ] && \
-#[ ${WAVEFRONT_API} != "null" ] && \
-#[ ${WAVEFRONT_TOKEN} != "null" ]; then
-#  WAVEFRONT=enabled
-#fi
+if  [ ! -z ${EXTERNAL_HOSTNAME} ] && \
+[ ${EXTERNAL_HOSTNAME} != "null" ]; then
+  FQDN=${EXTERNAL_HOSTNAME}
+fi
 
 
 $(cat <<-EOF > ${HOME_DIR}/.env.sh
@@ -105,6 +109,10 @@ AZS_STORAGE_CONTAINER=${AZS_STORAGE_CONTAINER}
 AZS_STORAGE_ACCOUNT_KEY="${AZS_STORAGE_ACCOUNT_KEY}"
 AZS_STORAGE_ACCOUNT_NAME=${AZS_STORAGE_ACCOUNT_NAME}
 AZS_BASE_DOMAIN=${AZS_BASE_DOMAIN}
+CA_CERT="$(get_setting CA_CERT)"
+HOST_CERT="$(get_setting HOST_CERT)"
+CERT_KEY="$(get_setting CERT_KEY)"
+FQDN="${FQDN}"
 EOF
 )
 

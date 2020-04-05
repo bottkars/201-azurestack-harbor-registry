@@ -26,6 +26,12 @@
                 "description": "Unique DNS Name for the Public IP used to access the Host."
             }
         },
+        "externalHostname": {
+            "type": "String",
+            "metadata": {
+                "description": "only if using external DNS, specify the FQDN here, otherwise defaulting to hostname.azurestackdnslabel"
+            }
+        },        
         "harborUsername": {
             "defaultValue": "admin",
             "minLength": 5,
@@ -45,7 +51,28 @@
                 "description": "for testing, use self signed certs, otherwise Let´s Encrypt"
             }
         },
-        "ubuntuOSVersion": {
+
+"caCert": {
+            "type": "String",
+            "metadata": {
+                "description": "Your Root CA Cert for HTTPS SSL, required for DOcker Engine in no Mozilla CA"
+            }
+        },
+"hostCert": {
+
+            "type": "String",
+            "metadata": {
+                "description": "Host cert for Harbor Host or wildcard san for Domain. if not present, a selfsigned cert will be generated"
+            }
+        },
+
+"certKey": {
+            "type": "String",
+            "metadata": {
+                "description": "for testing, use self signed certs, otherwise Let´s Encrypt"
+            }
+        },                
+"ubuntuOSVersion": {
             "defaultValue": "18.04-LTS",
             "allowedValues": [
                 "18.04-LTS"
@@ -539,12 +566,16 @@
                             "SSH_PUBLIC_KEY": "[parameters('sshkeyData')]",
                             "HARBOR_USERNAME": "[parameters('harborUsername')]",
                             "USE_SELF_CERTS": "[parameters('useSelfCerts')]",
+                            "CA_CERT": "[parameters('caCert')]",
+                            "HOST_CERT": "[parameters('hostCert')]",
+                            "CERT_KEY": "[parameters('certKey')]",
                             "AZS_STORAGE_CONTAINER": "[parameters('container')]",
                             "AZS_CA": "[parameters('rootCA')]",
                             "AZS_STORAGE_ACCOUNT_KEY": "[parameters('accountkey')]",
                             "AZS_STORAGE_ACCOUNT_NAME": "[parameters('accountname')]",
                             "AZS_BASE_DOMAIN": "[parameters('azurestackdomain')]",
-                            "FQDN": "[reference(variables('publicIPAddressName')).dnsSettings.fqdn]"
+                            "FQDN": "[reference(variables('publicIPAddressName')).dnsSettings.fqdn]",
+                            "EXTERNAL_HOSTNAME": "[parameters('externalHostname')]"
                         }
                     }
                 }

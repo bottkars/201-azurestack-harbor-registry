@@ -30,13 +30,33 @@ mkdir -p ${LOG_DIR}
 exec &> >(tee -a "${LOG_DIR}/${MYSELF}.$(date '+%Y-%m-%d-%H').log")
 exec 2>&1
 
+### certificate stuff
+
+if  [ -z ${CA_CERT} ] ; then
+  echo "need to generates selfsigned certs for $FQDN"
+  ${SCRIPT_DIR}/create_self_certs.sh
+else
+  echo ${CA_CERT} > ${FQDN}.ca.crt
+  echo ${HOST_CERT} > ${FQDN}.host.crt
+  echo ${CERT_KEY} > ${FQDN}.key
+fi  
+
+
+
+
 TAG=$(curl -s https://api.github.com/repos/goharbor/harbor/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
 URI="https://github.com/goharbor/harbor/releases/download/${TAG}/harbor-online-installer-${TAG}.tgz"
 wget $URI
 tar xzfv harbor-online-installer-${TAG}.tgz
 sed "s/^hostname: .*/hostname: ${FQDN}/g" -i ./harbor/harbor.yml
+sed "s/^certificate: .*/certificate: ${HOME_DIR}/${FQDN}.host.crt/g" -i ./harbor/harbor.yml
+sed "s/^private_key: .*/private_key: ${HOME_DIR}/${FQDN}.key/g" -i ./harbor/harbor.yml
+
 sed "s/^data_volume: \/data/data_volume: \/datadisks\/disk1/g" -i ./harbor/harbor.yml
 
+if [ -s "${FQDN}.ca.crt" ] ; then
+    sudo mkdir -p /etc/docker/certs.d/${FQDN}/
+    sudo cp -c ${HOME_DIR}/${FQDN}.ca.crt /etc/docker/certs.d/${FQDN}/ca.crt
 
 #cat <<EOF >> ./harbor/harbor.yml
 #storage_service:
