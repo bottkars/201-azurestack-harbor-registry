@@ -3,12 +3,18 @@
 ## validate
 
 ```bash
+SSHKEY=$(cat ~/.ssh/id_rsa.pub)
+DNS_LABEL_PREFIX=harbor1
+```
 
-az group create --name harbor --location local
-az group deployment validate --resource-group harbor \
+```bash
+
+az group create --name ${DNS_LABEL_PREFIX} --location local
+az deployment group validate --resource-group ${DNS_LABEL_PREFIX} \
     --template-uri "https://raw.githubusercontent.com/bottkars/201-azurestack-harbor-registry/master/azuredeploy.json" \
     --parameters \
-    sshKeyData=${SSHKEY}
+    sshKeyData="${SSHKEY}" \
+    HostDNSLabelPrefix=${DNS_LABEL_PREFIX}
 ```
 
 ## deploy
@@ -17,7 +23,7 @@ az group deployment validate --resource-group harbor \
 az group deployment create --resource-group harbor \
     --template-uri "https://raw.githubusercontent.com/bottkars/201-azurestack-harbor-registry/master/azuredeploy.json" \
     --parameters \
-    sshKeyData=${SSHKEY}
+    sshKeyData="${SSHKEY}"
 ```
 
 
