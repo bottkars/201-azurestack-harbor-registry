@@ -87,6 +87,7 @@ if  [ ! -z ${EXTERNAL_HOSTNAME} ] && \
 [ ${EXTERNAL_HOSTNAME} != "null" ]; then
   FQDN=${EXTERNAL_HOSTNAME}
 fi
+# HARBOR_ADMIN_PASSWORD="$(get_setting HARBOR_ADMIN_PASSWORD)"
 
 
 $(cat <<-EOF > ${HOME_DIR}/.env.sh

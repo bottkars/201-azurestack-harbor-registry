@@ -3,13 +3,10 @@
 This template deploys a Basic Harbor Container registry with HTTPS Support on Azure Stack
 It supports generation og self-signed certificates OR use of Custom Certificates
 
-when USing external Certificates, an external DNS Name can be used as well ( needs to be configured in your DNS ) 
-
+when Using external Certificates, an external DNS Name can be used as well ( needs to be configured in your DNS ) 
 
 
 ## basic deployment using self-signed certificates
-
-
 
 ```bash
 DNS_LABEL_PREFIX=devregistry # this should be the azurestack cloudapp dns name , e.g. Harbor, Mandatory
