@@ -1,11 +1,18 @@
 # 201-azurestack-harbor-registry
 
+This template deploys a Basic Harbor Container registry with HTTPS Support on Azure Stack
+It supports generation og self-signed certificates OR use of Custom Certificates
+
+when USing external Certificates, an external DNS Name can be used as well ( needs to be configured in your DNS ) 
+
+
+
 ## basic deployment using self-signed certificates
 
 
 
 ```bash
-DNS_LABEL_PREFIX=harbor1 # this should be the azurestack cloudapp dns name , e.g. Harbor, Mandatory
+DNS_LABEL_PREFIX=devregistry # this should be the azurestack cloudapp dns name , e.g. Harbor, Mandatory
 ```
 ### Template Validation
 ```bash
@@ -20,16 +27,23 @@ az deployment group validate --resource-group ${DNS_LABEL_PREFIX:?variable is em
 ### Template deployment
 
 ```bash
-az group deployment create --resource-group harbor \
+az group deployment create --resource-group  ${DNS_LABEL_PREFIX:?variable is empty} \
     --template-uri "https://raw.githubusercontent.com/bottkars/201-azurestack-harbor-registry/master/azuredeploy.json" \
     --parameters \
     sshKeyData="$(cat ~/.ssh/id_rsa.pub)"
 ```
 
-### using external hostname and user Provided certificate:
-
-EXTERNAL_HOSTNAME=harbor2.home.labbuldr.com
+### cleaning up
 ```bash
+az group delete --name ${DNS_LABEL_PREFIX:?variable is empty} --yes
+```
+
+
+### using external hostname and user Provided certificate:
+```bash
+DNS_LABEL_PREFIX=registry #dns host label prefix 
+EXTERNAL_HOSTNAME=registry.home.labbuldr.com #external dns name
+
 az group create --name ${DNS_LABEL_PREFIX:?variable is empty} --location local
 
 az deployment group validate --resource-group ${DNS_LABEL_PREFIX:?variable is empty}\
@@ -54,6 +68,9 @@ az deployment group create --resource-group ${DNS_LABEL_PREFIX:?variable is empt
     certKey="$(cat ~/workspace/.acme.sh/home.labbuildr.com/home.labbuildr.com.key)" \
     externalHostname=${EXTERNAL_HOSTNAME:?variable is empty}
 ```    
+## Troubleshooting
+
+
 
 
 ## THIS IS STILL TBD AND SUBJECT TO TESTING
