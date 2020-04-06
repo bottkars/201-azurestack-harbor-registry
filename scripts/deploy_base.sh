@@ -30,7 +30,7 @@ retryop "apt update && apt install -y jq" 10 30
 function get_setting() {
   key=$1
   local value=$(echo $settings | jq ".$key" -r)
-  echo $value
+  echo "${value}" ## ( use "${VAR}" to retain spaces, KB)
 }
 custom_data_file="/var/lib/cloud/instance/user-data.txt"
 settings=$(cat ${custom_data_file})
