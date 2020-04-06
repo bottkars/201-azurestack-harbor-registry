@@ -36,9 +36,9 @@ if  [ -z ${HOST_CERT} ] ; then
   echo "No host Cert presented need to generates selfsigned certs for $FQDN"
   ${SCRIPT_DIR}/create_self_certs.sh
 else
-  echo ${CA_CERT} > ${FQDN}.ca.crt
-  echo ${HOST_CERT} > ${FQDN}.host.crt
-  echo ${CERT_KEY} > ${FQDN}.key
+  echo "${CA_CERT}" > ${FQDN}.ca.crt
+  echo "${HOST_CERT}" > ${FQDN}.host.crt
+  echo "${CERT_KEY}" > ${FQDN}.key
 fi  
 
 
@@ -49,6 +49,7 @@ TAG=$(curl -s https://api.github.com/repos/goharbor/harbor/releases/latest | gre
 URI="https://github.com/goharbor/harbor/releases/download/${TAG}/harbor-online-installer-${TAG}.tgz"
 wget $URI
 tar xzfv harbor-online-installer-${TAG}.tgz
+echo "editing values in harbor.yml"
 sed "s/^hostname: .*/hostname: ${FQDN}/g" -i ./harbor/harbor.yml
 sed "s/^  certificate: .*/  certificate: ${HOME_DIR//\//\\/}\/${FQDN}.host.crt/g" -i ./harbor/harbor.yml
 sed "s/^  private_key: .*/  private_key: ${HOME_DIR//\//\\/}\/${FQDN}.key/g" -i ./harbor/harbor.yml

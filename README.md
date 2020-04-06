@@ -1,23 +1,23 @@
 # 201-azurestack-harbor-registry
 
-## validate
+## basic deployment using self-signed certificates
+
+
 
 ```bash
-SSHKEY=$(cat ~/.ssh/id_rsa.pub)
-DNS_LABEL_PREFIX=harbor1
+DNS_LABEL_PREFIX=harbor1 # this should be the azurestack cloudapp dns name , e.g. Harbor, Mandatory
 ```
-
+### Template Validation
 ```bash
-
-az group create --name ${DNS_LABEL_PREFIX} --location local
-az deployment group validate --resource-group ${DNS_LABEL_PREFIX} \
+az group create --name ${DNS_LABEL_PREFIX:?variable is empty} --location local
+az deployment group validate --resource-group ${DNS_LABEL_PREFIX:?variable is empty} \
     --template-uri "https://raw.githubusercontent.com/bottkars/201-azurestack-harbor-registry/master/azuredeploy.json" \
     --parameters \
     sshKeyData="$(cat ~/.ssh/id_rsa.pub)" \
-    HostDNSLabelPrefix=${DNS_LABEL_PREFIX}
+    HostDNSLabelPrefix=${DNS_LABEL_PREFIX:?variable is empty}
 ```
 
-## deploy
+### Template deployment
 
 ```bash
 az group deployment create --resource-group harbor \
@@ -26,33 +26,60 @@ az group deployment create --resource-group harbor \
     sshKeyData="$(cat ~/.ssh/id_rsa.pub)"
 ```
 
-### using external hostname and certificate:
+### using external hostname and user Provided certificate:
 
 EXTERNAL_HOSTNAME=harbor2.home.labbuldr.com
 ```bash
-az group create --name ${DNS_LABEL_PREFIX} --location local
+az group create --name ${DNS_LABEL_PREFIX:?variable is empty} --location local
 
-az deployment group validate --resource-group ${DNS_LABEL_PREFIX}\
+az deployment group validate --resource-group ${DNS_LABEL_PREFIX:?variable is empty}\
     --template-uri "https://raw.githubusercontent.com/bottkars/201-azurestack-harbor-registry/master/azuredeploy.json" \
     --parameters \
     sshKeyData="$(cat ~/.ssh/id_rsa.pub)" \
-    HostDNSLabelPrefix=${DNS_LABEL_PREFIX} \
+    HostDNSLabelPrefix=${DNS_LABEL_PREFIX:?variable is empty} \
     caCert="$(cat ~/workspace/.acme.sh/home.labbuildr.com/ca.cer)" \
     hostCert="$(cat ~/workspace/.acme.sh/home.labbuildr.com/home.labbuildr.com.cer)" \
     certKey="$(cat ~/workspace/.acme.sh/home.labbuildr.com/home.labbuildr.com.key)" \
-    externalHostname=harbor2.home.labbuildr.com
+    externalHostname=${EXTERNAL_HOSTNAME:?variable is empty}
 ```
-```
-az deployment group create --resource-group ${DNS_LABEL_PREFIX}\
+
+```bash
+az deployment group create --resource-group ${DNS_LABEL_PREFIX:?variable is empty}\
     --template-uri "https://raw.githubusercontent.com/bottkars/201-azurestack-harbor-registry/master/azuredeploy.json" \
     --parameters \
     sshKeyData="$(cat ~/.ssh/id_rsa.pub)" \
-    HostDNSLabelPrefix=${DNS_LABEL_PREFIX} \
+    HostDNSLabelPrefix=${DNS_LABEL_PREFIX:?variable is empty} \
     caCert="$(cat ~/workspace/.acme.sh/home.labbuildr.com/ca.cer)" \
     hostCert="$(cat ~/workspace/.acme.sh/home.labbuildr.com/home.labbuildr.com.cer)" \
     certKey="$(cat ~/workspace/.acme.sh/home.labbuildr.com/home.labbuildr.com.key)" \
-    externalHostname=harbor2.home.labbuildr.com
+    externalHostname=${EXTERNAL_HOSTNAME:?variable is empty}
 ```    
+
+
+## THIS IS STILL TBD AND SUBJECT TO TESTING
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
