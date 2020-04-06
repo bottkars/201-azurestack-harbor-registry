@@ -46,12 +46,12 @@ az deployment group validate --resource-group ${DNS_LABEL_PREFIX}\
     --template-uri "https://raw.githubusercontent.com/bottkars/201-azurestack-harbor-registry/master/azuredeploy.json" \
     --parameters \
     sshKeyData="${SSHKEY}" \
+    HostDNSLabelPrefix=${DNS_LABEL_PREFIX} \
     caCert="$(cat ~/workspace/.acme.sh/home.labbuildr.com/ca.cer)" \
     hostCert="$(cat ~/workspace/.acme.sh/home.labbuildr.com/home.labbuildr.com.cer)" \
-    certKey="$(cat ~/workspace/.acme.sh/home.labbuildr.com/home.labbuildr.com.key)"
-
-
-    ```
+    certKey="$(cat ~/workspace/.acme.sh/home.labbuildr.com/home.labbuildr.com.key)" \
+    externalHostname=harbor2.home.labbuildr.com
+```
 
 
 

@@ -33,7 +33,7 @@ exec 2>&1
 ### certificate stuff
 
 if  [ -z ${HOST_CERT} ] ; then
-  echo "need to generates selfsigned certs for $FQDN"
+  echo "No host Cert presented need to generates selfsigned certs for $FQDN"
   ${SCRIPT_DIR}/create_self_certs.sh
 else
   echo ${CA_CERT} > ${FQDN}.ca.crt

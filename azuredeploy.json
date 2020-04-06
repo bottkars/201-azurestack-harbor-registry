@@ -19,7 +19,7 @@
             }
         },
         "HostDNSLabelPrefix": {
-            "defaultValue": "harbor",
+            "defaultValue": "",
             "minLength": 3,
             "type": "String",
             "metadata": {
