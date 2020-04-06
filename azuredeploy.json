@@ -41,18 +41,6 @@
                 "description": "admin username for harbor"
             }
         },
-        "useSelfCerts": {
-            "defaultValue": "TRUE",
-            "allowedValues": [
-                "FALSE",
-                "TRUE"
-            ],
-            "type": "String",
-            "metadata": {
-                "description": "for testing, use self signed certs, otherwise Let´s Encrypt"
-            }
-        },
-
         "caCert": {
             "type": "String",
             "defaultValue": "",
@@ -568,7 +556,6 @@
                             "LOCATION": "[parameters('location')]",
                             "SSH_PUBLIC_KEY": "[parameters('sshkeyData')]",
                             "HARBOR_USERNAME": "[parameters('harborUsername')]",
-                            "USE_SELF_CERTS": "[parameters('useSelfCerts')]",
                             "CA_CERT": "[parameters('caCert')]",
                             "HOST_CERT": "[parameters('hostCert')]",
                             "CERT_KEY": "[parameters('certKey')]",
