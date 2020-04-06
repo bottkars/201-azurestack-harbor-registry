@@ -26,6 +26,34 @@ az group deployment create --resource-group harbor \
     sshKeyData="${SSHKEY}"
 ```
 
+### using external hostname and certificate:
+
+EXTERNAL_HOSTNAME=harbor2.home.labbuldr.com
+"CA_CERT": "[parameters('caCert')]",
+"HOST_CERT": "[parameters('hostCert')]",
+"CERT_KEY": "[parameters('certKey')]",
+
+
+                            "CA_CERT": "[parameters('caCert')]",
+                            "HOST_CERT": "[parameters('hostCert')]",
+                            "CERT_KEY": "[parameters('certKey')]",
+
+~/workspace/.acme.sh/home.labbuildr.com/ca.cer
+```bash
+az group create --name ${DNS_LABEL_PREFIX} --location local
+
+az deployment group validate --resource-group ${DNS_LABEL_PREFIX}\
+    --template-uri "https://raw.githubusercontent.com/bottkars/201-azurestack-harbor-registry/master/azuredeploy.json" \
+    --parameters \
+    sshKeyData="${SSHKEY}" \
+    caCert="$(cat ~/workspace/.acme.sh/home.labbuildr.com/ca.cer)" \
+    hostCert="$(cat ~/workspace/.acme.sh/home.labbuildr.com/home.labbuildr.com.cer)" \
+    certKey="$(cat ~/workspace/.acme.sh/home.labbuildr.com/home.labbuildr.com.key)"
+
+
+    ```
+
+
 
 
 ### using Azurestack Storage Backend

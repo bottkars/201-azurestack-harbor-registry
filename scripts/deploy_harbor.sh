@@ -32,7 +32,7 @@ exec 2>&1
 
 ### certificate stuff
 
-if  [ -z ${CA_CERT} ] ; then
+if  [ -z ${HOST_CERT} ] ; then
   echo "need to generates selfsigned certs for $FQDN"
   ${SCRIPT_DIR}/create_self_certs.sh
 else
