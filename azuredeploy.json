@@ -20,6 +20,7 @@
         },
         "HostDNSLabelPrefix": {
             "defaultValue": "",
+            "minLength": 3,
             "type": "String",
             "metadata": {
                 "description": "Unique DNS Name for the Public IP used to access the Host."
@@ -178,7 +179,6 @@
         },
         {
             "type": "Microsoft.Network/publicIPAddresses",
-            "condition": "[not(empty(parameters('HostDNSLabelPrefix')))]",
             "name": "[variables('publicIPAddressName')]",
             "apiVersion": "2017-06-01",
             "location": "[parameters('location')]",
@@ -191,20 +191,6 @@
                 "dnsSettings": {
                     "domainNameLabel": "[parameters('HostDNSLabelPrefix')]"
                 }
-            }
-        },        
-        {
-            "type": "Microsoft.Network/publicIPAddresses",
-            "condition": "[empty(parameters('HostDNSLabelPrefix'))]",
-            "name": "[variables('publicIPAddressName')]",
-            "apiVersion": "2017-06-01",
-            "location": "[parameters('location')]",
-            "tags": {
-                "provisioner": "harbor_template_by_azurestackguy"
-            },
-
-            "properties": {
-                "publicIPAllocationMethod": "[variables('publicIPAddressType')]"
             }
         },
         {
