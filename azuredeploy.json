@@ -20,7 +20,6 @@
         },
         "HostDNSLabelPrefix": {
             "defaultValue": "",
-            "minLength": 3,
             "type": "String",
             "metadata": {
                 "description": "Unique DNS Name for the Public IP used to access the Host."
