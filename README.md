@@ -24,10 +24,11 @@ az deployment group validate --resource-group ${DNS_LABEL_PREFIX:?variable is em
 ### Template deployment
 
 ```bash
-az group deployment create --resource-group  ${DNS_LABEL_PREFIX:?variable is empty} \
+az  deployment group create --resource-group  ${DNS_LABEL_PREFIX:?variable is empty} \
     --template-uri "https://raw.githubusercontent.com/bottkars/201-azurestack-harbor-registry/master/azuredeploy.json" \
     --parameters \
-    sshKeyData="$(cat ~/.ssh/id_rsa.pub)"
+    sshKeyData="$(cat ~/.ssh/id_rsa.pub)" \
+    HostDNSLabelPrefix=${DNS_LABEL_PREFIX:?variable is empty}
 ```
 
 ### cleaning up
