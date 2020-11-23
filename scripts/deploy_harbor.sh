@@ -44,8 +44,8 @@ fi
 
 
 
-TAG=$(curl -s https://api.github.com/repos/goharbor/harbor/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
-# TAG="v1.10.1" shall we include a logig if tag is an RC and has no online installer ?
+# TAG=$(curl -s https://api.github.com/repos/goharbor/harbor/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
+TAG="v2.1.1" # shall we include a logig if tag is an RC and has no online installer ?
 URI="https://github.com/goharbor/harbor/releases/download/${TAG}/harbor-online-installer-${TAG}.tgz"
 wget $URI
 tar xzfv harbor-online-installer-${TAG}.tgz
