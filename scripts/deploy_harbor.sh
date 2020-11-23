@@ -52,7 +52,7 @@ tar xzfv harbor-online-installer-${TAG}.tgz
 echo "editing values in harbor.yml"
 if [[ -f ./harbor/harbor.yml.tmpl ]]
     then 
-    ./harbor/harbor.yml.tmpl ./harbor/harbor.yml
+    cp ./harbor/harbor.yml.tmpl ./harbor/harbor.yml
     fi
 sed "s/^hostname: .*/hostname: ${FQDN}/g" -i ./harbor/harbor.yml
 sed "s/^  certificate: .*/  certificate: ${HOME_DIR//\//\\/}\/${FQDN}.host.crt/g" -i ./harbor/harbor.yml
