@@ -50,6 +50,10 @@ URI="https://github.com/goharbor/harbor/releases/download/${TAG}/harbor-online-i
 wget $URI
 tar xzfv harbor-online-installer-${TAG}.tgz
 echo "editing values in harbor.yml"
+if [[ -f ./harbor/harbor.yml.tmpl ]]
+    then 
+    ./harbor/harbor.yml.tmpl ./harbor/harbor.yml
+    fi
 sed "s/^hostname: .*/hostname: ${FQDN}/g" -i ./harbor/harbor.yml
 sed "s/^  certificate: .*/  certificate: ${HOME_DIR//\//\\/}\/${FQDN}.host.crt/g" -i ./harbor/harbor.yml
 sed "s/^  private_key: .*/  private_key: ${HOME_DIR//\//\\/}\/${FQDN}.key/g" -i ./harbor/harbor.yml
