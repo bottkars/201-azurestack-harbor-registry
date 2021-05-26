@@ -44,14 +44,14 @@ fi
 
 
 
-# TAG=$(curl -s https://api.github.com/repos/goharbor/harbor/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
-TAG="v2.1.1" # shall we include a logig if tag is an RC and has no online installer ?
+TAG=$(curl -s https://api.github.com/repos/goharbor/harbor/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
+# TAG="v2.1.1" # shall we include a logig if tag is an RC and has no online installer ?
 URI="https://github.com/goharbor/harbor/releases/download/${TAG}/harbor-online-installer-${TAG}.tgz"
 wget $URI
 tar xzfv harbor-online-installer-${TAG}.tgz
 echo "editing values in harbor.yml"
 if [[ -f ./harbor/harbor.yml.tmpl ]]
-    then 
+    then AG=$(curl -s https://api.github.com/repos/goharbor/harbor/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
     cp ./harbor/harbor.yml.tmpl ./harbor/harbor.yml
     fi
 sed "s/^hostname: .*/hostname: ${FQDN}/g" -i ./harbor/harbor.yml
