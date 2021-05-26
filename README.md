@@ -49,9 +49,9 @@ az deployment group validate --resource-group ${DNS_LABEL_PREFIX:?variable is em
     --parameters \
     sshKeyData="$(cat ~/.ssh/id_rsa.pub)" \
     HostDNSLabelPrefix=${DNS_LABEL_PREFIX:?variable is empty} \
-    caCert="$(cat ~/workspace/.acme.sh/home.labbuildr.com/ca.cer)" \
-    hostCert="$(cat ~/workspace/.acme.sh/home.labbuildr.com/home.labbuildr.com.cer)" \
-    certKey="$(cat ~/workspace/.acme.sh/home.labbuildr.com/home.labbuildr.com.key)" \
+    caCert="$(cat ~/Downloads/Acmecert.crt)" \
+    hostCert="$(cat ~/Downloads/home.labbuildr.com.crt)" \
+    certKey="$(cat ~/Downloads/home.labbuildr.com.key)" \
     externalHostname=${EXTERNAL_HOSTNAME:?variable is empty}
 ```
 
@@ -61,9 +61,9 @@ az deployment group create --resource-group ${DNS_LABEL_PREFIX:?variable is empt
     --parameters \
     sshKeyData="$(cat ~/.ssh/id_rsa.pub)" \
     HostDNSLabelPrefix=${DNS_LABEL_PREFIX:?variable is empty} \
-    caCert="$(cat ~/workspace/.acme.sh/home.labbuildr.com/ca.cer)" \
-    hostCert="$(cat ~/workspace/.acme.sh/home.labbuildr.com/home.labbuildr.com.cer)" \
-    certKey="$(cat ~/workspace/.acme.sh/home.labbuildr.com/home.labbuildr.com.key)" \
+    caCert="$(cat ~/Downloads/Acmecert.crt)" \
+    hostCert="$(cat ~/Downloads/home.labbuildr.com.crt)" \
+    certKey="$(cat ~/Downloads/home.labbuildr.com.key)" \
     externalHostname=${EXTERNAL_HOSTNAME:?variable is empty}
 ```    
 ## Troubleshooting
