@@ -64,15 +64,18 @@ if [ -s "${FQDN}.ca.crt" ] ; then
     sudo cp  ${HOME_DIR}/${FQDN}.ca.crt /etc/docker/certs.d/${FQDN}/ca.crt
     sudo systemctl restart docker    
 fi
-#cat <<EOF >> ./harbor/harbor.yml
-#storage_service:
-#  ca_bundle: "${AZS_CA}"
-#  azure:
-#    accountname: ${AZS_STORAGE_ACCOUNT_NAME}
-#    accountkey: ${AZS_STORAGE_ACCOUNT_KEY}
-#    container: ${AZS_STORAGE_CONTAINER}
-#    realm: ${AZS_BASE_DOMAIN}
-# EOF
+if  [ -z ${AZS_STORAGE_ACCOUNT_NAME} ] ; then
+cat <<EOF >> ./harbor/harbor.yml
+storage_service:
+  ca_bundle: "${AZS_CA}"
+  azure:
+    accountname: ${AZS_STORAGE_ACCOUNT_NAME}
+    accountkey: ${AZS_STORAGE_ACCOUNT_KEY}
+    container: ${AZS_STORAGE_CONTAINER}
+    realm: ${AZS_BASE_DOMAIN}
+ EOF
+
+fi
 
 cd ./harbor
 sudo ./install.sh
