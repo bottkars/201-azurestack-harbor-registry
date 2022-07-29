@@ -98,10 +98,11 @@ az group deployment validate --resource-group harbor \
     hostCert="$(cat ~/Downloads/home.labbuildr.com.crt)" \
     certKey="$(cat ~/Downloads/home.labbuildr.com.key)" \
     externalHostname=${EXTERNAL_HOSTNAME:?variable is empty}
-    rootCA=${CERT} \
-    container=${AZS_STORAGE_CONTAINER} \
-    accountkey=${AZS_STORAGE_ACCOUNT_KEY} \
-    accountname=${AZS_STORAGE_ACCOUNT_NAME}
+    rootCA=${CERT:?variable is empty} \
+    container=${AZS_STORAGE_CONTAINER:?variable is empty} \
+    accountkey=${AZS_STORAGE_ACCOUNT_KEY:?variable is empty} \
+    accountname=${AZS_STORAGE_ACCOUNT_NAME:?variable is empty} \
+    azurestackdomain=${AZS_DOMAIN:?variable is empty}
 ```
 
 ```bash
@@ -115,10 +116,10 @@ az group deployment create --resource-group harbor \
     hostCert="$(cat ~/Downloads/home.labbuildr.com.crt)" \
     certKey="$(cat ~/Downloads/home.labbuildr.com.key)" \
     externalHostname=${EXTERNAL_HOSTNAME:?variable is empty}
-    rootCA=${CERT} \
-    container=${AZS_STORAGE_CONTAINER} \
-    accountkey=${AZS_STORAGE_ACCOUNT_KEY} \
-    accountname=${AZS_STORAGE_ACCOUNT_NAME} \
-    azurestackdomain=${AZS_DOMAIN}
+    rootCA=${CERT:?variable is empty} \
+    container=${AZS_STORAGE_CONTAINER:?variable is empty} \
+    accountkey=${AZS_STORAGE_ACCOUNT_KEY:?variable is empty} \
+    accountname=${AZS_STORAGE_ACCOUNT_NAME:?variable is empty} \
+    azurestackdomain=${AZS_DOMAIN:?variable is empty}
 ```
 
