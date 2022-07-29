@@ -67,8 +67,8 @@ echo "editing Storage Services"
 if  [ -s ${AZS_STORAGE_ACCOUNT_KEY} ] ; then
 sed "s/^data_volume: \/data/data_volume: \/datadisks\/disk1/g" -i ./harbor/harbor.yml
 else
-sed "/data_volume:/d" -i ./harbor/harbor.yml
-
+# sed "/data_volume:/d" -i ./harbor/harbor.yml
+sed "s/^data_volume: \/data/data_volume: \/datadisks\/disk1/g" -i ./harbor/harbor.yml
 echo "${AZS_CA}" > ca_bundle.crt
 cat <<EOF >> ./harbor/harbor.yml
 storage_service:
