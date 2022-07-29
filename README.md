@@ -80,7 +80,7 @@ Put your Cert into a Variable
 
 ```bash
 DNS_LABEL_PREFIX=registry #dns host label prefix 
-EXTERNAL_HOSTNAME=registry.home.labbuldr.com #external dns name
+EXTERNAL_HOSTNAME=registry.home.labbuildr.com #external dns name
 AZS_STORAGE_CONTAINER=registry
 AZS_STORAGE_ACCOUNT_NAME=opsmanagerimage
 AZS_DOMAIN=local.azurestack.external
