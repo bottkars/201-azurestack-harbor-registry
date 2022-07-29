@@ -79,7 +79,6 @@ az deployment group create --resource-group ${DNS_LABEL_PREFIX:?variable is empt
 Put your Cert into a Variable
 
 ```bash
-CERT=$(awk 'NF {sub(/\r/, ""); printf "%s\\n",$0;}' ~/Downloads/root.pem)
 DNS_LABEL_PREFIX=registry #dns host label prefix 
 EXTERNAL_HOSTNAME=registry.home.labbuldr.com #external dns name
 AZS_STORAGE_CONTAINER=registry
@@ -98,7 +97,7 @@ az deployment group validate --resource-group harbor \
     hostCert="$(cat ~/Downloads/home.labbuildr.com.crt)" \
     certKey="$(cat ~/Downloads/home.labbuildr.com.key)" \
     externalHostname=${EXTERNAL_HOSTNAME:?variable is empty} \
-    rootCA=${CERT:?variable is empty} \
+    rootCA="$(cat ~/Downloads/root.pem)" \
     container=${AZS_STORAGE_CONTAINER:?variable is empty} \
     accountkey=${AZS_STORAGE_ACCOUNT_KEY:?variable is empty} \
     accountname=${AZS_STORAGE_ACCOUNT_NAME:?variable is empty} \
@@ -116,7 +115,7 @@ az deployment group create --resource-group harbor \
     hostCert="$(cat ~/Downloads/home.labbuildr.com.crt)" \
     certKey="$(cat ~/Downloads/home.labbuildr.com.key)" \
     externalHostname=${EXTERNAL_HOSTNAME:?variable is empty} \
-    rootCA=${CERT:?variable is empty} \
+    rootCA="$(cat ~/Downloads/root.pem)" \
     container=${AZS_STORAGE_CONTAINER:?variable is empty} \
     accountkey=${AZS_STORAGE_ACCOUNT_KEY:?variable is empty} \
     accountname=${AZS_STORAGE_ACCOUNT_NAME:?variable is empty} \
