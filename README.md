@@ -97,7 +97,7 @@ az group deployment validate --resource-group harbor \
     caCert="$(cat ~/Downloads/Acmecert.crt)" \
     hostCert="$(cat ~/Downloads/home.labbuildr.com.crt)" \
     certKey="$(cat ~/Downloads/home.labbuildr.com.key)" \
-    externalHostname=${EXTERNAL_HOSTNAME:?variable is empty}
+    externalHostname=${EXTERNAL_HOSTNAME:?variable is empty} \
     rootCA=${CERT:?variable is empty} \
     container=${AZS_STORAGE_CONTAINER:?variable is empty} \
     accountkey=${AZS_STORAGE_ACCOUNT_KEY:?variable is empty} \
@@ -115,7 +115,7 @@ az group deployment create --resource-group harbor \
     caCert="$(cat ~/Downloads/Acmecert.crt)" \
     hostCert="$(cat ~/Downloads/home.labbuildr.com.crt)" \
     certKey="$(cat ~/Downloads/home.labbuildr.com.key)" \
-    externalHostname=${EXTERNAL_HOSTNAME:?variable is empty}
+    externalHostname=${EXTERNAL_HOSTNAME:?variable is empty} \
     rootCA=${CERT:?variable is empty} \
     container=${AZS_STORAGE_CONTAINER:?variable is empty} \
     accountkey=${AZS_STORAGE_ACCOUNT_KEY:?variable is empty} \
