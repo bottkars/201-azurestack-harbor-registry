@@ -73,7 +73,7 @@ storage_service:
     accountkey: ${AZS_STORAGE_ACCOUNT_KEY}
     container: ${AZS_STORAGE_CONTAINER}
     realm: ${AZS_BASE_DOMAIN}
- EOF
+EOF
 
 fi
 
