@@ -87,7 +87,7 @@ AZS_DOMAIN=local.azurestack.external
 ```
 
 ```bash
-az group create --name harbor --location local
+az group create --name ${DNS_LABEL_PREFIX:?variable is empty} --location local
 az deployment group validate --resource-group harbor \
     --template-uri "https://raw.githubusercontent.com/bottkars/201-azurestack-harbor-registry/master/azuredeploy.json" \
     --parameters \
@@ -105,7 +105,7 @@ az deployment group validate --resource-group harbor \
 ```
 
 ```bash
-az group create --name harbor --location local
+az group create --name ${DNS_LABEL_PREFIX:?variable is empty} --location local
 az deployment group create --resource-group harbor \
     --template-uri "https://raw.githubusercontent.com/bottkars/201-azurestack-harbor-registry/master/azuredeploy.json" \
     --parameters \
