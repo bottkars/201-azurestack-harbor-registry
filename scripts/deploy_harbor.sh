@@ -21,7 +21,7 @@ set -- "${POSITIONAL[@]}" # restore positional parameters
 if  [ -z ${HOME_DIR} ] ; then
  echo "Please specify HOME DIR -h|--HOME"
  exit 1
-fi 
+fi
 
 cd ${HOME_DIR}
 source ${HOME_DIR}/.env.sh
@@ -32,16 +32,14 @@ exec 2>&1
 
 ### certificate stuff
 
-if  [ -z ${HOST_CERT} ] ; then
+if  [[ -z ${HOST_CERT} ]] ; then
   echo "No host Cert presented need to generates selfsigned certs for $FQDN"
   ${SCRIPT_DIR}/create_self_certs.sh
 else
-  echo "${CA_CERT}" > ${FQDN}.ca.crt
+  
   echo "${HOST_CERT}" > ${FQDN}.host.crt
   echo "${CERT_KEY}" > ${FQDN}.key
-fi  
-
-
+fi
 
 
 TAG=$(curl -s https://api.github.com/repos/goharbor/harbor/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
@@ -49,32 +47,38 @@ TAG=$(curl -s https://api.github.com/repos/goharbor/harbor/releases/latest | gre
 URI="https://github.com/goharbor/harbor/releases/download/${TAG}/harbor-online-installer-${TAG}.tgz"
 wget $URI
 tar xzfv harbor-online-installer-${TAG}.tgz
-echo "editing values in harbor.yml"
-if [[ -f ./harbor/harbor.yml.tmpl ]]
+if [ -f ./harbor/harbor.yml.tmpl ]
     then AG=$(curl -s https://api.github.com/repos/goharbor/harbor/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
-    cp ./harbor/harbor.yml.tmpl ./harbor/harbor.yml
-    fi
+    cp  ./harbor/harbor.yml.tmpl ./harbor/harbor.yml
+fi
+echo "editing values in harbor.yml"
 sed "s/^hostname: .*/hostname: ${FQDN}/g" -i ./harbor/harbor.yml
 sed "s/^  certificate: .*/  certificate: ${HOME_DIR//\//\\/}\/${FQDN}.host.crt/g" -i ./harbor/harbor.yml
 sed "s/^  private_key: .*/  private_key: ${HOME_DIR//\//\\/}\/${FQDN}.key/g" -i ./harbor/harbor.yml
-sed "s/^data_volume: \/data/data_volume: \/datadisks\/disk1/g" -i ./harbor/harbor.yml
 
 if [ -s "${FQDN}.ca.crt" ] ; then
     sudo mkdir -p /etc/docker/certs.d/${FQDN}/
     sudo cp  ${HOME_DIR}/${FQDN}.ca.crt /etc/docker/certs.d/${FQDN}/ca.crt
-    sudo systemctl restart docker    
+    sudo systemctl restart docker
 fi
-if  [ -z ${AZS_STORAGE_ACCOUNT_NAME} ] ; then
+
+echo "editing Storage Services"
+
+if  [ -s ${AZS_STORAGE_ACCOUNT_KEY} ] ; then
+sed "s/^data_volume: \/data/data_volume: \/datadisks\/disk1/g" -i ./harbor/harbor.yml
+else
+sed "/data_volume:/d" -i ./harbor/harbor.yml
+
+echo "${AZS_CA}" > ca_bundle.crt
 cat <<EOF >> ./harbor/harbor.yml
 storage_service:
-  ca_bundle: "${AZS_CA}"
+  ca_bundle:  ${HOME_DIR}/ca_bundle.crt
   azure:
     accountname: ${AZS_STORAGE_ACCOUNT_NAME}
     accountkey: ${AZS_STORAGE_ACCOUNT_KEY}
     container: ${AZS_STORAGE_CONTAINER}
     realm: ${AZS_BASE_DOMAIN}
 EOF
-
 fi
 
 cd ./harbor
