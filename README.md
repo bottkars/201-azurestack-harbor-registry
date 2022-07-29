@@ -79,11 +79,12 @@ az deployment group create --resource-group ${DNS_LABEL_PREFIX:?variable is empt
 Put your Cert into a Variable
 
 ```bash
-CERT=$(awk 'NF {sub(/\r/, ""); printf "%s\\n",$0;}' ~/Desktop/certs/root.pem)
+CERT=$(awk 'NF {sub(/\r/, ""); printf "%s\\n",$0;}' ~/Downloads/root.pem)
 DNS_LABEL_PREFIX=registry #dns host label prefix 
 EXTERNAL_HOSTNAME=registry.home.labbuldr.com #external dns name
 AZS_STORAGE_CONTAINER=registry
 AZS_STORAGE_ACCOUNT_NAME=opsmanagerimage
+AZS_DOMAIN=local.azurestack.external
 ```
 
 ```bash
@@ -117,6 +118,7 @@ az group deployment create --resource-group harbor \
     rootCA=${CERT} \
     container=${AZS_STORAGE_CONTAINER} \
     accountkey=${AZS_STORAGE_ACCOUNT_KEY} \
-    accountname=${AZS_STORAGE_ACCOUNT_NAME}
+    accountname=${AZS_STORAGE_ACCOUNT_NAME} \
+    azurestackdomain=${AZS_DOMAIN}
 ```
 
