@@ -89,7 +89,7 @@ AZS_DOMAIN=local.azurestack.external
 
 ```bash
 az group create --name harbor --location local
-az group deployment validate --resource-group harbor \
+az deployment group validate --resource-group harbor \
     --template-uri "https://raw.githubusercontent.com/bottkars/201-azurestack-harbor-registry/master/azuredeploy.json" \
     --parameters \
     sshKeyData="$(cat ~/.ssh/id_rsa.pub)" \
@@ -107,7 +107,7 @@ az group deployment validate --resource-group harbor \
 
 ```bash
 az group create --name harbor --location local
-az group deployment create --resource-group harbor \
+az deployment group create --resource-group harbor \
     --template-uri "https://raw.githubusercontent.com/bottkars/201-azurestack-harbor-registry/master/azuredeploy.json" \
     --parameters \
     sshKeyData="$(cat ~/.ssh/id_rsa.pub)" \
