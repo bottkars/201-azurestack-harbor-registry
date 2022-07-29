@@ -74,37 +74,16 @@ az deployment group create --resource-group ${DNS_LABEL_PREFIX:?variable is empt
 ## THIS IS STILL TBD AND SUBJECT TO TESTING
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ### using Azurestack Storage Backend
 
-But your Cert into a Variable
+Put your Cert into a Variable
 
 ```bash
 CERT=$(awk 'NF {sub(/\r/, ""); printf "%s\\n",$0;}' ~/Desktop/certs/root.pem)
+DNS_LABEL_PREFIX=registry #dns host label prefix 
+EXTERNAL_HOSTNAME=registry.home.labbuldr.com #external dns name
+AZS_STORAGE_CONTAINER=registry
+AZS_STORAGE_ACCOUNT_NAME=opsmanagerimage
 ```
 
 ```bash
@@ -112,7 +91,12 @@ az group create --name harbor --location local
 az group deployment validate --resource-group harbor \
     --template-uri "https://raw.githubusercontent.com/bottkars/201-azurestack-harbor-registry/master/azuredeploy.json" \
     --parameters \
-    sshKeyData=${SSHKEY} \
+    sshKeyData="$(cat ~/.ssh/id_rsa.pub)" \
+    HostDNSLabelPrefix=${DNS_LABEL_PREFIX:?variable is empty} \
+    caCert="$(cat ~/Downloads/Acmecert.crt)" \
+    hostCert="$(cat ~/Downloads/home.labbuildr.com.crt)" \
+    certKey="$(cat ~/Downloads/home.labbuildr.com.key)" \
+    externalHostname=${EXTERNAL_HOSTNAME:?variable is empty}
     rootCA=${CERT} \
     container=${AZS_STORAGE_CONTAINER} \
     accountkey=${AZS_STORAGE_ACCOUNT_KEY} \
@@ -124,7 +108,12 @@ az group create --name harbor --location local
 az group deployment create --resource-group harbor \
     --template-uri "https://raw.githubusercontent.com/bottkars/201-azurestack-harbor-registry/master/azuredeploy.json" \
     --parameters \
-    sshKeyData=${SSHKEY} \
+    sshKeyData="$(cat ~/.ssh/id_rsa.pub)" \
+    HostDNSLabelPrefix=${DNS_LABEL_PREFIX:?variable is empty} \
+    caCert="$(cat ~/Downloads/Acmecert.crt)" \
+    hostCert="$(cat ~/Downloads/home.labbuildr.com.crt)" \
+    certKey="$(cat ~/Downloads/home.labbuildr.com.key)" \
+    externalHostname=${EXTERNAL_HOSTNAME:?variable is empty}
     rootCA=${CERT} \
     container=${AZS_STORAGE_CONTAINER} \
     accountkey=${AZS_STORAGE_ACCOUNT_KEY} \
